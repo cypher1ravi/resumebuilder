@@ -1,13 +1,8 @@
 // reducers/workDetailsReducer.js
-import { ADD_WORK_EXPERIENCE, } from '../actions/workDetailsAction';
+import { ADD_WORK_EXPERIENCE, DELETE_WORK_EXPERIENCE, } from '../actions/workDetailsAction';
 
 const initialState = {
-    workList: [{
-        company: 'xyz',
-        position: 'web-dev',
-        startDate: '00/00/0000',
-        endDate: '00/00/0000'
-    }]
+    workList: []
 };
 
 const workDetailsReducer = (state = initialState, action) => {
@@ -17,7 +12,13 @@ const workDetailsReducer = (state = initialState, action) => {
                 ...state,
                 workList: [...state.workList, action.payload],
             };
-
+        case DELETE_WORK_EXPERIENCE:
+            const updatedExperiences = [...state.workList]
+            updatedExperiences.splice(action.payload, 1);
+            return {
+                ...state,
+                workList: updatedExperiences
+            }
         default:
             return state;
     }

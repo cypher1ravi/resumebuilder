@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const SkillsDetails = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-
     const skillList = useSelector((state) => state.keySkills.skillList);
     const [newSkill, setNewSkill] = useState('');
 
@@ -30,15 +29,18 @@ const SkillsDetails = () => {
 
     return (
         <div>
+
             <TextField
                 label="Add Skill"
                 variant="outlined"
+                marginRight={5}
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
             />
-            <Button onClick={handleAddSkill} variant="contained" color="warning">
+            <Button onClick={handleAddSkill} variant="contained" color="primary" >
                 Add
             </Button>
+
             <List>
                 {skillList.map((skill, index) => (
                     <ListItem key={index}>

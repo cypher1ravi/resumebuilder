@@ -8,6 +8,7 @@ import {
     ListItemText,
     Divider,
 } from '@mui/material';
+import { Name, Summary, Title } from './templeteComponents/Header'
 
 const headerStyle = {
     backgroundColor: 'lightblue',
@@ -19,23 +20,23 @@ const dividerStyle = {
     margin: '20px 0',
 };
 
-const Templete2 = () => {
+const Template2 = () => {
     return (
         <div>
             <Paper style={{ padding: '16px', margin: 'auto', maxWidth: 800 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={headerStyle}>
                         <Typography variant="h4" align="center">
-                            Your Name
+                            <Name />
                         </Typography>
                         <Typography variant="subtitle1" align="center">
-                            Your Job Title
+                            <Title />
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6">Summary</Typography>
                         <Typography>
-                            Your summary or objective statement goes here.
+                            <Summary />
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -74,4 +75,4 @@ const Templete2 = () => {
     );
 };
 
-export default Templete2;
+export default Template2;

@@ -13,9 +13,12 @@ export default function App() {
         dispatch(addEducation(education))
         navigate('/details/keySkills')
     }
-    const onBack = (education) => {
-        // dispatch(addEducation(education))
+    const onBack = () => {
         navigate('/details/workExperience')
+    }
+    const onNext = () => {
+        navigate('/details/keySkills')
+        // dispatch(addEducation(education))
     }
 
     return (
@@ -62,7 +65,7 @@ export default function App() {
                     </Button>
                 </Grid>
                 <Grid item>
-                    <Button type="submit" variant="contained" color="warning">
+                    <Button type="button" onClick={onNext} variant="contained" color="warning">
                         Next
                     </Button>
                 </Grid>
