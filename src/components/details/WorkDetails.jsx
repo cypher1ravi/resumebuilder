@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Grid, IconButton } from '@mui/material';
-import { Delete as DeleteIcon } from '@mui/icons-material'; // Import the delete icon
+import { Delete as DeleteIcon } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addWorkExperience, deleteWorkExperience } from '../../redux/actions/workDetailsAction';

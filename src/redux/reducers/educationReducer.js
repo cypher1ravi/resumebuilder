@@ -1,14 +1,10 @@
 // reducers/educationReducer.js
 
-import { ADD_EDUCATION, UPDATE_EDUCATION } from '../actions/educationAction';
+import { ADD_EDUCATION, DELETE_EDUCATION } from '../actions/educationAction';
 
 
 const initialState = {
-    educationList: [{
-        institution: 'IIT bomby',
-        degree: 'ug',
-        year: '2023'
-    }]
+    educationList: []
 };
 
 const educationReducer = (state = initialState, action) => {
@@ -19,9 +15,13 @@ const educationReducer = (state = initialState, action) => {
                 educationList: [...state.educationList, action.payload],
 
             };
-        // case UPDATE_EDUCATION:
-        //     // Implement logic to update an existing education entry
-        //     return state;
+        case DELETE_EDUCATION:
+            const updatedEducation = [...state.educationList]
+            updatedEducation.splice(action.payload, 1);
+            return {
+                ...state,
+                workList: updatedEducation
+            }
         default:
             return state;
     }

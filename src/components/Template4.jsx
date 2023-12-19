@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Templete3() {
+export default function Template4() {
     return (
         <div>
-            <h2>Templete3</h2>
+            <h1>Templ4te4</h1>
         </div>
     )
 }

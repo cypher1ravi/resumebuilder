@@ -1,110 +1,115 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/system';
-import { Tooltip, Typography, Container, Grid } from '@mui/material/';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import { Grid, Typography } from '@mui/material/';
 import Temp1Image from '../images/temp1.jpg';
 import Temp2Image from '../images/temp2.jpg';
 import Temp3Image from '../images/temp3.jpg';
 import Temp4Image from '../images/temp4.jpg';
+import { selectCard } from '../redux/actions/selectCardAction';
 
-const templates = [
+const images = [
     {
-        image: Temp1Image,
+        imageUrl: Temp1Image,
         title: 'Template 1',
     },
     {
-        image: Temp2Image,
+        imageUrl: Temp2Image,
         title: 'Template 2',
     },
     {
-        image: Temp3Image,
+        imageUrl: Temp3Image,
         title: 'Template 3',
     },
     {
-        image: Temp4Image,
+        imageUrl: Temp4Image,
         title: 'Template 4',
     },
+    {
+        imageUrl: Temp4Image,
+        title: 'Template 4',
+    },
+    {
+        imageUrl: Temp4Image,
+        title: 'Template 4',
+    },
+    {
+        imageUrl: Temp4Image,
+        title: 'Template 4',
+    },
+
 ];
 
-const CardContainer = styled(Grid)`
-  margin-top: 30px;
-`;
-
-const HoverCardWrapper = styled(Card)`
-  transition: background-color 0.3s;
-  height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(193, 193, 193);
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-    .hover-button {
-      display: block;
-    }
-  }
-`;
-
-const HoverButton = styled(Button)`
-  display: none;
-  margin: 10px; /* Add some margin to separate the button from the image */
-`;
-
-const ImageStyle = {
-    maxWidth: '100%',
-    maxHeight: '100%',
-};
-
-const centerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-};
-
-function Home() {
+const Home = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const routeChange = () => {
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const routeChange = (index) => {
+        dispatch(selectCard(index))
         navigate('/details');
     };
 
-    return (
-        <div>
-            <Container>
-                <Typography variant="h4" sx={{ marginTop: '12px' }}>
-                    Templates
-                </Typography>
-                <Typography variant="subtitle1">Select a Template to Get Started</Typography>
-                <CardContainer container spacing={2}>
-                    {templates.map((template, index) => (
-                        <Grid item key={index} xs={12} sm={6} md={3}>
-                            <Tooltip title={template.title}>
-                                <HoverCardWrapper>
-                                    <CardContent style={centerStyle}>
-                                        <img
-                                            src={template.image}
-                                            alt={template.title}
-                                            style={ImageStyle}
-                                        />
-                                        <HoverButton className="hover-button" variant="contained" color="primary" onClick={routeChange}>
-                                            Use Template
-                                        </HoverButton>
-                                    </CardContent>
-                                </HoverCardWrapper>
-                            </Tooltip>
-                        </Grid>
-                    ))}
-                </CardContainer>
-            </Container>
-        </div>
+    const handleMouseEnter = (index) => {
+        setHoveredIndex(index);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredIndex(null);
+    };
+
+    return (<div>
+        <Typography variant="h4" sx={{ marginTop: '12px' }}>
+            Templates
+        </Typography>
+        <Typography variant="subtitle1" sx={{ marginBottom: '12px' }}>Select a Template to Get Started</Typography>
+        <Grid container spacing={2}>
+            {images.map((image, index) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                    <Paper
+                        elevation={6}
+                        onMouseEnter={() => handleMouseEnter(index)}
+                        onMouseLeave={handleMouseLeave}
+                        sx={{
+                            position: 'relative',
+                            overflow: 'hidden',
+                            cursor: 'pointer',
+                            backgroundColor: hoveredIndex === index ? 'rgba(0, 0, 0, 0.9)' : 'transparent',
+                        }}
+                    >
+                        <img
+                            src={image.imageUrl}
+                            alt={image.title}
+                            style={{
+                                width: '100%',
+                                height: 'auto',
+                                transition: 'opacity 0.5s',
+                                opacity: hoveredIndex === index ? 0.7 : 1,
+                            }}
+                        />
+                        {hoveredIndex === index && (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '48%',
+                                    transform: 'translate(-50%, -50%)',
+                                    zIndex: 1,
+                                }}
+                            >
+                                <Button variant="contained" color="primary" onClick={() => routeChange(index)}>
+                                    Use Template
+                                </Button>
+                            </div>
+                        )}
+                    </Paper>
+                </Grid>
+            ))}
+        </Grid>
+    </div>
     );
-}
+};
 
 export default Home;

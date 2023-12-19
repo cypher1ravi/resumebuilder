@@ -1,33 +1,67 @@
 import React from 'react';
 import jsPDF from 'jspdf';
+import Template1 from './Template1';
 import Template2 from './Template2';
-import ReactDOM from 'react-dom';
+import Template3 from './Template3';
+import Template4 from './Template4';
+import { ReactDOM } from 'react';
+import { useSelector } from 'react-redux';
+
 export default function Preview() {
+    const card = useSelector((state) => state.selectedCard);
+
     const generatePDF = () => {
         const doc = new jsPDF();
 
-        // Render Template2 to HTML
-        const template2Element = document.createElement('div');
+        // Get the selected component based on card.cardIndex
+        let selectedComponent;
+        switch (card.cardIndex) {
+            case 0:
+                selectedComponent = <Template1 />;
+                break;
+            case 1:
+                selectedComponent = <Template2 />;
+                break;
+            case 2:
+                selectedComponent = <Template3 />;
+                break;
+            case 3:
+                selectedComponent = <Template4 />;
+                break;
+            default:
+                selectedComponent = "No template selected";
+        }
 
-        // Render the Template2 component to the HTML element
-        ReactDOM.render(<Template2 />, template2Element);
+        // Convert the selected component to a string
+        const selectedComponentString = ReactDOM.renderToString(selectedComponent);
 
-        // Convert the HTML element to a string
-        const htmlString = new XMLSerializer().serializeToString(template2Element);
+        // Add the selected component content to the PDF
+        doc.text("Preview Page", 10, 10);
+        doc.text(selectedComponentString, 10, 30);
 
-        // Add the HTML to the PDF using jsPDF's html method
-        doc.html(htmlString, {
-            callback: (doc) => {
-                // Save the PDF to a file or open it in a new tab
-                doc.save('react_component.pdf');
-            },
-        });
+        // Save the PDF with a file name
+        doc.save("preview.pdf");
     };
 
     return (
         <div>
             <h1>Preview page</h1>
-            <Template2 />
+            {
+                (() => {
+                    switch (card.cardIndex) {
+                        case 0:
+                            return <Template1 />;
+                        case 1:
+                            return <Template2 />;
+                        case 2:
+                            return <Template3 />;
+                        case 3:
+                            return <Template4 />;
+                        default:
+                            return "No template selected";
+                    }
+                })()
+            }
             <button onClick={generatePDF}>Generate PDF</button>
         </div>
     );
