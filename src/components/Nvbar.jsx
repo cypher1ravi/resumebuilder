@@ -40,7 +40,7 @@ function Navbar() {
                 </MyTypography>
                 <div>
                     <MyButton color="inherit" component={Link} to="/">Home</MyButton>
-                    {/* <MyButton color="inherit" component={Link} to="/details">Details</MyButton> */}
+                    <MyButton color="inherit" component={Link} to="/details">Details</MyButton>
                     <MyButton color="inherit" component={Link} to="/Preview">Preview</MyButton>
                     <MyButton color="inherit" component={Link} to="/about">About US</MyButton>
                 </div>

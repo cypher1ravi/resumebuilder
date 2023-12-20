@@ -13,6 +13,7 @@ import WorkDetails from './components/details/WorkDetails';
 import SkillsDetails from './components/details/SkillsDetails';
 
 
+
 function App() {
   return (
     <>
